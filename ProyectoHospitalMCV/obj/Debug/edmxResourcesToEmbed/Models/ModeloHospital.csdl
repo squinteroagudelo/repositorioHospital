@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="bd_hospitalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="cita">
+    <Key>
+      <PropertyRef Name="idCita" />
+    </Key>
+    <Property Name="idCita" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fecha" Type="DateTime" Precision="0" />
+    <Property Name="hora" Type="Time" Precision="7" />
+    <Property Name="idPaciente" Type="Int32" />
+    <Property Name="idMedico" Type="Int32" />
+    <NavigationProperty Name="medico" Relationship="Self.fk_med_cita" FromRole="cita" ToRole="medico" />
+    <NavigationProperty Name="paciente" Relationship="Self.fk_pac_cita" FromRole="cita" ToRole="paciente" />
+  </EntityType>
+  <EntityType Name="especialidad">
+    <Key>
+      <PropertyRef Name="idEspecialidad" />
+    </Key>
+    <Property Name="idEspecialidad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="medico" Relationship="Self.fk_espec_med" FromRole="especialidad" ToRole="medico" />
+  </EntityType>
+  <EntityType Name="medico">
+    <Key>
+      <PropertyRef Name="idMedico" />
+    </Key>
+    <Property Name="idMedico" Type="Int32" Nullable="false" />
+    <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="apellido" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="sexo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="telefono" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="registroMedico" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="idEspecialidad" Type="Int32" />
+    <NavigationProperty Name="cita" Relationship="Self.fk_med_cita" FromRole="medico" ToRole="cita" />
+    <NavigationProperty Name="especialidad" Relationship="Self.fk_espec_med" FromRole="medico" ToRole="especialidad" />
+  </EntityType>
+  <EntityType Name="paciente">
+    <Key>
+      <PropertyRef Name="idPaciente" />
+    </Key>
+    <Property Name="idPaciente" Type="Int32" Nullable="false" />
+    <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="apellido" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="sexo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="telefono" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="fechaNacimiento" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="idSeguro" Type="Int32" />
+    <Property Name="idTipo" Type="Int32" />
+    <NavigationProperty Name="cita" Relationship="Self.fk_pac_cita" FromRole="paciente" ToRole="cita" />
+    <NavigationProperty Name="seguro" Relationship="Self.fk_seg_pac" FromRole="paciente" ToRole="seguro" />
+    <NavigationProperty Name="tipoSeguro" Relationship="Self.fk_tipo_pac" FromRole="paciente" ToRole="tipoSeguro" />
+  </EntityType>
+  <EntityType Name="seguro">
+    <Key>
+      <PropertyRef Name="idSeguro" />
+    </Key>
+    <Property Name="idSeguro" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="paciente" Relationship="Self.fk_seg_pac" FromRole="seguro" ToRole="paciente" />
+  </EntityType>
+  <EntityType Name="tipoSeguro">
+    <Key>
+      <PropertyRef Name="idTipoSeguro" />
+    </Key>
+    <Property Name="idTipoSeguro" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tipo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="paciente" Relationship="Self.fk_tipo_pac" FromRole="tipoSeguro" ToRole="paciente" />
+  </EntityType>
+  <Association Name="fk_med_cita">
+    <End Role="medico" Type="Self.medico" Multiplicity="0..1" />
+    <End Role="cita" Type="Self.cita" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="medico">
+        <PropertyRef Name="idMedico" />
+      </Principal>
+      <Dependent Role="cita">
+        <PropertyRef Name="idMedico" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_pac_cita">
+    <End Role="paciente" Type="Self.paciente" Multiplicity="0..1" />
+    <End Role="cita" Type="Self.cita" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="paciente">
+        <PropertyRef Name="idPaciente" />
+      </Principal>
+      <Dependent Role="cita">
+        <PropertyRef Name="idPaciente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_espec_med">
+    <End Role="especialidad" Type="Self.especialidad" Multiplicity="0..1" />
+    <End Role="medico" Type="Self.medico" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="especialidad">
+        <PropertyRef Name="idEspecialidad" />
+      </Principal>
+      <Dependent Role="medico">
+        <PropertyRef Name="idEspecialidad" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_seg_pac">
+    <End Role="seguro" Type="Self.seguro" Multiplicity="0..1" />
+    <End Role="paciente" Type="Self.paciente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="seguro">
+        <PropertyRef Name="idSeguro" />
+      </Principal>
+      <Dependent Role="paciente">
+        <PropertyRef Name="idSeguro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_tipo_pac">
+    <End Role="tipoSeguro" Type="Self.tipoSeguro" Multiplicity="0..1" />
+    <End Role="paciente" Type="Self.paciente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tipoSeguro">
+        <PropertyRef Name="idTipoSeguro" />
+      </Principal>
+      <Dependent Role="paciente">
+        <PropertyRef Name="idTipo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="bd_hospitalEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="cita" EntityType="Self.cita" />
+    <EntitySet Name="especialidad" EntityType="Self.especialidad" />
+    <EntitySet Name="medico" EntityType="Self.medico" />
+    <EntitySet Name="paciente" EntityType="Self.paciente" />
+    <EntitySet Name="seguro" EntityType="Self.seguro" />
+    <EntitySet Name="tipoSeguro" EntityType="Self.tipoSeguro" />
+    <AssociationSet Name="fk_med_cita" Association="Self.fk_med_cita">
+      <End Role="medico" EntitySet="medico" />
+      <End Role="cita" EntitySet="cita" />
+    </AssociationSet>
+    <AssociationSet Name="fk_pac_cita" Association="Self.fk_pac_cita">
+      <End Role="paciente" EntitySet="paciente" />
+      <End Role="cita" EntitySet="cita" />
+    </AssociationSet>
+    <AssociationSet Name="fk_espec_med" Association="Self.fk_espec_med">
+      <End Role="especialidad" EntitySet="especialidad" />
+      <End Role="medico" EntitySet="medico" />
+    </AssociationSet>
+    <AssociationSet Name="fk_seg_pac" Association="Self.fk_seg_pac">
+      <End Role="seguro" EntitySet="seguro" />
+      <End Role="paciente" EntitySet="paciente" />
+    </AssociationSet>
+    <AssociationSet Name="fk_tipo_pac" Association="Self.fk_tipo_pac">
+      <End Role="tipoSeguro" EntitySet="tipoSeguro" />
+      <End Role="paciente" EntitySet="paciente" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

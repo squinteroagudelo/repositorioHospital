@@ -1,0 +1,55 @@
+﻿@model ProyectoHospitalMCV.Models.cita
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Eliminar</h2>
+
+<h5>¿Está seguro que desea eliminar la cita?</h5>
+<div>
+    <h4>Cita</h4>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.fecha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fecha)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.hora)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.hora)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.medico.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.medico.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.paciente.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.paciente.nombre)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-default" /> |
+            @Html.ActionLink("Regresar", "Index")
+        </div>
+    }
+</div>

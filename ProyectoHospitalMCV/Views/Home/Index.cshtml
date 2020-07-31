@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron" style="margin-bottom: 0; padding-bottom:3px">
+    <h2 class="text-center"><strong>SISTEMA DE GESTIÓN HOSPITAL</strong></h2>
+    <p class="lead text-center">"Ingreso de pacientes y asignación de citas médicas"</p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>@Html.ActionLink("Pacientes", "index", "pacientes")</h2>
+        <div>
+            <img src="@Url.Content("~/Images/paciente.png")" class="img-rounded img-thumbnail btn-block" width="300px" height="200px" alt="imgf" />
+            <p class="text-justify">
+                Gestión integral de datos de pacientes, en el sistema de salud interno, basado en la normatividad actual, respetando la seguridad
+                y la privacidad de los datos de nuestros apreciados beneficiarios.
+            </p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h2>@Html.ActionLink("Médicos", "index", "medicos")</h2>
+        <div>
+            <img src="@Url.Content("~/Images/medico.png")" class="img-rounded img-thumbnail btn-block" width="300px" height="200px" alt="imgf" />
+            <p class="text-justify">
+                Formulario de nuestra planta profesional de médicos y especialistas con la mejor formación, unidos en un mismo objetivo, a saber,
+                velar por el bienestar y la salud de nuestros pacientes, generando impacto positivo en su calidad de vida.
+            </p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h2>@Html.ActionLink("Citas", "index", "citas")</h2>
+        <div>
+            <img src="@Url.Content("~/Images/cita.png")" class="img-thumbnail btn-block" width="300px" height="200px" alt="imgf" />
+            <p class="text-justify">
+                Agendamiento y asignación de citas para revisión y/o seguimiento con uno de nuestros profesionales de la salud,
+                en una de nuestras sedes de la ciudad. Nos apasionamos por nuestra misión y cada vez brindamos un mejor servicio.
+            </p>
+        </div>
+    </div>
+</div>
